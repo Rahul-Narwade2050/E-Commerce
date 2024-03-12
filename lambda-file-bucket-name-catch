@@ -1,0 +1,8 @@
+import boto3 
+def lambda_hander(event,context):
+    bucket=event['Records'][0]['s3']['bucket']['name']
+    file= event['Records'][0]['s3']['object']['key']
+print(f'bucket_name={bucket} and file_name = {file}')
+
+client=boto3.client('glue')
+responce=client.start_job_run(JobName='Myjob',Arguments{'--buck':bucket,'--'file':file})
